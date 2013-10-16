@@ -34,18 +34,10 @@ JekyllGenerator.prototype.askFor = function askFor() {
     var cb = this.async();
 
     // welcome message
-    var welcome =
-    '\n     _-----_' +
-    '\n    |       |' +
-    '\n    |' + '--(o)--'.red + '|   .--------------------------.' +
-    '\n   `---------´  |    ' + 'Welcome to Yeoman,'.yellow.bold + '    |' +
-    '\n    ' + '( '.yellow + '_' + '´U`'.yellow + '_' + ' )'.yellow + '   |   ' + 'ladies and gentlemen!'.yellow.bold + '  |' +
-    '\n    /___A___\\   \'__________________________\'' +
-    '\n     |  ~  |'.yellow +
-    '\n   __' + '\'.___.\''.yellow + '__' +
-    '\n ´   ' + '`  |'.red + '° ' + '´ Y'.red + ' `\n';
-
-    console.log(welcome);
+    if (!this.options['skip-welcome-message']) {
+        console.log(this.yeoman);
+        console.log('Out of the box I include Jekyll.');
+    }
 
     var prompts = [{
         name: 'bootstrap',
@@ -59,10 +51,7 @@ JekyllGenerator.prototype.askFor = function askFor() {
         warning: 'Yes: Enabling this will be totally awesome!'
     }];
 
-    this.prompt(prompts, function (err, props) {
-        if (err) {
-            return this.emit('error', err);
-        }
+    this.prompt(prompts, function (props) {
 
         this.bootstrap = (/y/i).test(props.bootstrap);
         this.fontawesome = (/y/i).test(props.fontawesome);
